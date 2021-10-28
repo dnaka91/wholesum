@@ -1,0 +1,14 @@
+[licenses]
+allow = [
+    "BSD-2-Clause",
+    "CC0-1.0",
+]
+allow-osi-fsf-free = "both"
+exceptions = [
+    { allow = ["AGPL-3.0"], name = "wholesum", version = "*" },
+]
+
+[bans]
+skip = [
+    { name = "crypto-mac", version = "=0.8.0" },
+]
