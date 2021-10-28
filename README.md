@@ -3,7 +3,7 @@
 ![CI](https://github.com/dnaka91/wholesum/workflows/CI/badge.svg?branch=main)
 
 Wholesome collection of file hashing algorithms all bundled in a single tool. Like `sha256sum`,
-`b3sum` and others, the _whole_-sum.
+`b3sum` and others, but one: the _whole_-sum.
 
 ## Build
 
