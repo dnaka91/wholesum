@@ -7,7 +7,7 @@ use std::{
 };
 
 use clap::ArgEnum;
-use digest::{generic_array::ArrayLength, Digest};
+use digest::{generic_array::ArrayLength, Digest, OutputSizeUser};
 use strum::{Display, EnumString};
 
 pub mod hashfile;
@@ -93,8 +93,8 @@ impl Algorithm {
     pub fn into_hasher(self) -> fn(&Path) -> Result<String> {
         match self {
             Self::Blake3 => hash::<blake3::Hasher>,
-            Self::Blake2s => hash::<blake2::Blake2s>,
-            Self::Blake2b => hash::<blake2::Blake2b>,
+            Self::Blake2s => hash::<blake2::Blake2s256>,
+            Self::Blake2b => hash::<blake2::Blake2b512>,
             Self::Sha3_512 => hash::<sha3::Sha3_512>,
             Self::Sha3_384 => hash::<sha3::Sha3_384>,
             Self::Sha3_256 => hash::<sha3::Sha3_256>,
@@ -117,9 +117,9 @@ impl Algorithm {
             Self::Groestl224 => hash::<groestl::Groestl224>,
             Self::Md4 => hash::<md4::Md4>,
             Self::Md2 => hash::<md2::Md2>,
-            Self::Ripemd320 => hash::<ripemd320::Ripemd320>,
-            Self::Ripemd256 => hash::<ripemd256::Ripemd256>,
-            Self::Ripemd160 => hash::<ripemd160::Ripemd160>,
+            Self::Ripemd320 => hash::<ripemd::Ripemd320>,
+            Self::Ripemd256 => hash::<ripemd::Ripemd256>,
+            Self::Ripemd160 => hash::<ripemd::Ripemd160>,
             Self::Shabal512 => hash::<shabal::Shabal512>,
             Self::Shabal384 => hash::<shabal::Shabal384>,
             Self::Shabal256 => hash::<shabal::Shabal256>,
@@ -152,8 +152,8 @@ trait SimpleHasher {
 impl<D> SimpleHasher for D
 where
     D: Digest,
-    <D as Digest>::OutputSize: Add,
-    <<D as Digest>::OutputSize as Add>::Output: ArrayLength<u8>,
+    <D as OutputSizeUser>::OutputSize: Add,
+    <<D as OutputSizeUser>::OutputSize as Add>::Output: ArrayLength<u8>,
 {
     fn new() -> Self {
         D::new()

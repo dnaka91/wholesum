@@ -10,5 +10,5 @@ exceptions = [
 
 [bans]
 skip = [
-    { name = "crypto-mac", version = "=0.8.0" },
+    { name = "heck", version = "=0.3.3" },
 ]

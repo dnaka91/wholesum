@@ -4,7 +4,7 @@ use std::{
 };
 
 use anyhow::Result;
-use clap::{ArgEnum, Parser, Subcommand};
+use clap::{Parser, Subcommand};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use wholesum::{hashfile::HashFile, Algorithm, Mode};
 
