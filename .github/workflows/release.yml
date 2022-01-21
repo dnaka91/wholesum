@@ -79,6 +79,6 @@ jobs:
       - name: Sign checksum files
         run: for file in checksums.{b2,sha256,sha512}; do gpg -ba --yes "$file"; done
       - name: Upload checksums and signatures
-        run: gh release upload --clobber --repo "${{ github.repository }}" "${{ github.ref_name }}" checksums.{b2,sha256,sha512,asc}
+        run: gh release upload --clobber --repo "${{ github.repository }}" "${{ github.ref_name }}" checksums.{b2,sha256,sha512}{,.asc}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
