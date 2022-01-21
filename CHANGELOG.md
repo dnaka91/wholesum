@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.2.1] - 2022-01-21
+
+### Changed
+
+- Strip the pre-compiled binaries for ARM architecture.
+
+### Fixed
+
+- Adjust the `include` setting of `Cargo.toml` to generate a proper package for <https://crates.io>.
+
 ## [0.2.0] - 2022-01-20
 
 ### Added
@@ -27,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[Unreleased]: https://github.com/dnaka91/wholesum/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/dnaka91/wholesum/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/dnaka91/wholesum/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/dnaka91/wholesum/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dnaka91/wholesum/releases/tag/v0.1.0
