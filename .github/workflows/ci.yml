@@ -13,7 +13,7 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Rust
         uses: taiki-e/github-actions/install-rust@main
         with:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Rust (nightly)
         uses: taiki-e/github-actions/install-rust@main
         with:
@@ -55,7 +55,7 @@ jobs:
     continue-on-error: ${{ matrix.checks == 'advisories' }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check ${{ matrix.checks }}
         uses: EmbarkStudios/cargo-deny-action@v1
         with:
