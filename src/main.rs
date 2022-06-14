@@ -16,14 +16,14 @@ struct Opt {
     /// Doesn't affect hashing output at all and is just there for compatibility with other hashing
     /// tools. It will affect whether the file path in the output is prefixed with a space ' '
     /// (text) or asterisk '*' (binary).
-    #[clap(short, long, arg_enum, default_value_t = Mode::Text)]
+    #[clap(short, long, value_parser, value_enum, default_value_t = Mode::Text)]
     mode: Mode,
     /// The hashing algorithm that shall be used.
     ///
     /// The list of available algorithms is grouped into common and uncommon and then sorted by
     /// strength. Early entries in the list are considered common and extremely strong, later
     /// entries rather rare and weak algorithms.
-    #[clap(short, long, arg_enum, default_value_t = Algorithm::Blake3)]
+    #[clap(short, long, value_parser, value_enum, default_value_t = Algorithm::Blake3)]
     algorithm: Algorithm,
     /// Prepend each output line with the used hash algorithm.
     ///
@@ -31,10 +31,10 @@ struct Opt {
     ///
     /// It allows to later easily combine several files with different algorithms together or even
     /// check the same files multiple times with different algorithms.
-    #[clap(short, long)]
+    #[clap(short, long, action)]
     prefix: bool,
     /// List of files to hash. Directories are silently ignored.
-    #[clap(parse(from_os_str))]
+    #[clap(value_parser)]
     files: Vec<PathBuf>,
     #[clap(subcommand)]
     cmd: Option<Command>,
@@ -42,7 +42,10 @@ struct Opt {
 
 #[derive(Subcommand)]
 enum Command {
-    Check { file: PathBuf },
+    Check {
+        #[clap(value_parser)]
+        file: PathBuf,
+    },
 }
 
 /// Raw OS error code happening when trying to read a directory as file.
