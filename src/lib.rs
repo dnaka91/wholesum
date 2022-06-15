@@ -6,13 +6,13 @@ use std::{
     path::Path,
 };
 
-use clap::ArgEnum;
+use clap::ValueEnum;
 use digest::{generic_array::ArrayLength, Digest, OutputSizeUser};
 use strum::{Display, EnumString};
 
 pub mod hashfile;
 
-#[derive(Debug, Clone, Copy, ArgEnum, EnumString)]
+#[derive(Debug, Clone, Copy, EnumString, ValueEnum)]
 #[strum(serialize_all = "kebab-case")]
 pub enum Mode {
     Text,
@@ -30,7 +30,7 @@ impl Display for Mode {
     }
 }
 
-#[derive(Debug, Clone, Copy, ArgEnum, EnumString, Display)]
+#[derive(Debug, Clone, Copy, Display, EnumString, ValueEnum)]
 #[strum(serialize_all = "kebab-case")]
 pub enum Algorithm {
     Blake3,
