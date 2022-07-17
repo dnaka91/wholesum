@@ -44,9 +44,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Setup Rust
-        uses: taiki-e/github-actions/install-rust@main
-        with:
-          toolchain: stable
+        uses: dtolnay/rust-toolchain@stable
       - name: Install extra tools
         if: ${{ matrix.tools != '' }}
         run: sudo apt-get install -y --no-install-recommends ${{ matrix.tools }}
