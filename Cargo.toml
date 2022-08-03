@@ -11,6 +11,8 @@ description = """\
     Wholesome collection of file hashing algorithms all bundled in a single tool. Like sha256sum, \
     b3sum and others, but one: the whole-sum.\
 """
+categories = ["command-line-utilities", "filesystem"]
+keywords = ["file", "hashing", "utility"]
 
 [dependencies]
 anyhow = "1.0.60"
