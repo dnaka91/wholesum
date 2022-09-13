@@ -1,10 +1,11 @@
 use std::{
-    io::{Result as IoResult, Write},
+    io::{self, Result as IoResult, Write},
     path::{Path, PathBuf},
 };
 
 use anyhow::Result;
-use clap::{Parser, Subcommand};
+use clap::{CommandFactory, Parser, Subcommand};
+use clap_complete::Shell;
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use wholesum::{hashfile::HashFile, Algorithm, Mode};
 
@@ -41,7 +42,17 @@ struct Opt {
 
 #[derive(Subcommand)]
 enum Command {
-    Check { file: PathBuf },
+    /// Check hashes against their actual files.
+    Check {
+        /// File containing the list of hashes.
+        file: PathBuf,
+    },
+    /// Generate shell completions, writing them to the standard output.
+    Completions {
+        /// The shell type to generate completions for.
+        #[clap(value_enum)]
+        shell: Shell,
+    },
 }
 
 /// Raw OS error code happening when trying to read a directory as file.
@@ -50,8 +61,14 @@ const IS_A_DIRECTORY: i32 = 21;
 fn main() -> Result<()> {
     let opt = Opt::parse();
 
-    if let Some(Command::Check { file }) = opt.cmd {
-        verify_files(file)
+    if let Some(cmd) = opt.cmd {
+        match cmd {
+            Command::Check { file } => verify_files(file),
+            Command::Completions { shell } => {
+                print_completions(shell);
+                Ok(())
+            }
+        }
     } else {
         hash_files(opt)
     }
@@ -98,6 +115,15 @@ fn verify_files(file: PathBuf) -> Result<()> {
     stdout.flush()?;
 
     Ok(())
+}
+
+fn print_completions(shell: Shell) {
+    clap_complete::generate(
+        shell,
+        &mut Opt::command(),
+        env!("CARGO_PKG_NAME"),
+        &mut io::stdout().lock(),
+    );
 }
 
 fn hash_files(opt: Opt) -> Result<()> {
