@@ -53,6 +53,8 @@ enum Command {
         #[clap(value_enum)]
         shell: Shell,
     },
+    /// Generate man pages, writing them to the standard output.
+    Manpages,
 }
 
 /// Raw OS error code happening when trying to read a directory as file.
@@ -68,6 +70,7 @@ fn main() -> Result<()> {
                 print_completions(shell);
                 Ok(())
             }
+            Command::Manpages => print_manpages(),
         }
     } else {
         hash_files(opt)
@@ -124,6 +127,12 @@ fn print_completions(shell: Shell) {
         env!("CARGO_PKG_NAME"),
         &mut io::stdout().lock(),
     );
+}
+
+fn print_manpages() -> Result<()> {
+    clap_mangen::Man::new(Opt::command())
+        .render(&mut io::stdout().lock())
+        .map_err(Into::into)
 }
 
 fn hash_files(opt: Opt) -> Result<()> {
