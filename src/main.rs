@@ -1,4 +1,5 @@
 use std::{
+    fs::File,
     io::{self, Result as IoResult, Write},
     path::{Path, PathBuf},
 };
@@ -10,21 +11,21 @@ use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use wholesum::{hashfile::HashFile, Algorithm, Mode};
 
 #[derive(Parser)]
-#[clap(about, author, version)]
+#[command(about, author, version)]
 struct Opt {
     /// Text or binary mode.
     ///
     /// Doesn't affect hashing output at all and is just there for compatibility with other hashing
     /// tools. It will affect whether the file path in the output is prefixed with a space ' '
     /// (text) or asterisk '*' (binary).
-    #[clap(short, long, value_enum, default_value_t = Mode::Text)]
+    #[arg(short, long, value_enum, default_value_t)]
     mode: Mode,
     /// The hashing algorithm that shall be used.
     ///
     /// The list of available algorithms is grouped into common and uncommon and then sorted by
     /// strength. Early entries in the list are considered common and extremely strong, later
     /// entries rather rare and weak algorithms.
-    #[clap(short, long, value_enum, default_value_t = Algorithm::Blake3)]
+    #[arg(short, long, value_enum, default_value_t)]
     algorithm: Algorithm,
     /// Prepend each output line with the used hash algorithm.
     ///
@@ -32,11 +33,11 @@ struct Opt {
     ///
     /// It allows to later easily combine several files with different algorithms together or even
     /// check the same files multiple times with different algorithms.
-    #[clap(short, long)]
+    #[arg(short, long)]
     prefix: bool,
     /// List of files to hash. Directories are silently ignored.
     files: Vec<PathBuf>,
-    #[clap(subcommand)]
+    #[command(subcommand)]
     cmd: Option<Command>,
 }
 
@@ -50,11 +51,14 @@ enum Command {
     /// Generate shell completions, writing them to the standard output.
     Completions {
         /// The shell type to generate completions for.
-        #[clap(value_enum)]
+        #[arg(value_enum)]
         shell: Shell,
     },
-    /// Generate man pages, writing them to the standard output.
-    Manpages,
+    /// Generate man pages, writing them to the given directory.
+    Manpages {
+        /// Target directory.
+        dir: PathBuf,
+    },
 }
 
 /// Raw OS error code happening when trying to read a directory as file.
@@ -70,7 +74,7 @@ fn main() -> Result<()> {
                 print_completions(shell);
                 Ok(())
             }
-            Command::Manpages => print_manpages(),
+            Command::Manpages { dir } => print_manpages(&dir),
         }
     } else {
         hash_files(opt)
@@ -129,10 +133,25 @@ fn print_completions(shell: Shell) {
     );
 }
 
-fn print_manpages() -> Result<()> {
-    clap_mangen::Man::new(Opt::command())
-        .render(&mut io::stdout().lock())
-        .map_err(Into::into)
+fn print_manpages(dir: &Path) -> Result<()> {
+    fn print(dir: &Path, app: &clap::Command) -> Result<()> {
+        let name = app.get_display_name().unwrap_or_else(|| app.get_name());
+        let mut out = File::create(dir.join(format!("{name}.1")))?;
+
+        clap_mangen::Man::new(app.clone()).render(&mut out)?;
+        out.flush()?;
+
+        for sub in app.get_subcommands() {
+            print(dir, sub)?;
+        }
+
+        Ok(())
+    }
+
+    let mut app = Opt::command();
+    app.build();
+
+    print(dir, &app)
 }
 
 fn hash_files(opt: Opt) -> Result<()> {

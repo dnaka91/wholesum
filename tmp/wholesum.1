@@ -1,0 +1,61 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH wholesum 1  "wholesum 0.2.6" 
+.SH NAME
+wholesum \- Wholesome collection of file hashing algorithms all bundled in a single tool. Like sha256sum, b3sum and others, but one: the whole\-sum.
+.SH SYNOPSIS
+\fBwholesum\fR [\fB\-m\fR|\fB\-\-mode\fR] [\fB\-a\fR|\fB\-\-algorithm\fR] [\fB\-p\fR|\fB\-\-prefix\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fB\-V\fR|\fB\-\-version\fR] [\fIFILES\fR] [\fIsubcommands\fR]
+.SH DESCRIPTION
+Wholesome collection of file hashing algorithms all bundled in a single tool. Like sha256sum, b3sum and others, but one: the whole\-sum.
+.SH OPTIONS
+.TP
+\fB\-m\fR, \fB\-\-mode\fR=\fIMODE\fR [default: text]
+Text or binary mode.
+
+Doesn\*(Aqt affect hashing output at all and is just there for compatibility with other hashing tools. It will affect whether the file path in the output is prefixed with a space \*(Aq \*(Aq (text) or asterisk \*(Aq*\*(Aq (binary).
+.br
+
+.br
+[\fIpossible values: \fRtext, binary]
+.TP
+\fB\-a\fR, \fB\-\-algorithm\fR=\fIALGORITHM\fR [default: blake3]
+The hashing algorithm that shall be used.
+
+The list of available algorithms is grouped into common and uncommon and then sorted by strength. Early entries in the list are considered common and extremely strong, later entries rather rare and weak algorithms.
+.br
+
+.br
+[\fIpossible values: \fRblake3, blake2s, blake2b, sha3\-512, sha3\-384, sha3\-256, sha3\-224, sha2\-512, sha2\-384, sha2\-256, sha2\-224, sha1, md5, fsb512, fsb384, fsb256, fsb224, fsb160, gost94, groestl512, groestl384, groestl256, groestl224, md4, md2, ripemd320, ripemd256, ripemd160, shabal512, shabal384, shabal256, shabal224, shabal192, sm3, streebog512, streebog256, tiger, whirlpool]
+.TP
+\fB\-p\fR, \fB\-\-prefix\fR=\fIPREFIX\fR [default: false]
+Prepend each output line with the used hash algorithm.
+
+This changes the default output format used by many other hashing tools.
+
+It allows to later easily combine several files with different algorithms together or even check the same files multiple times with different algorithms.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help information (use `\-h` for a summary)
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+Print version information
+.TP
+[\fIFILES\fR]
+List of files to hash. Directories are silently ignored
+.SH SUBCOMMANDS
+.TP
+wholesum\-check(1)
+Check hashes against their actual files
+.TP
+wholesum\-completions(1)
+Generate shell completions, writing them to the standard output
+.TP
+wholesum\-manpages(1)
+Generate man pages, writing them to the given directory
+.TP
+wholesum\-help(1)
+Print this message or the help of the given subcommand(s)
+.SH VERSION
+v0.2.6
+.SH AUTHORS
+Dominik Nakamura <dnaka91@gmail.com>

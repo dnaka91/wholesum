@@ -12,9 +12,10 @@ use strum::{Display, EnumString};
 
 pub mod hashfile;
 
-#[derive(Debug, Clone, Copy, EnumString, ValueEnum)]
+#[derive(Debug, Default, Clone, Copy, EnumString, ValueEnum)]
 #[strum(serialize_all = "kebab-case")]
 pub enum Mode {
+    #[default]
     Text,
     Binary,
 }
@@ -30,9 +31,10 @@ impl Display for Mode {
     }
 }
 
-#[derive(Debug, Clone, Copy, Display, EnumString, ValueEnum)]
+#[derive(Debug, Default, Clone, Copy, Display, EnumString, ValueEnum)]
 #[strum(serialize_all = "kebab-case")]
 pub enum Algorithm {
+    #[default]
     Blake3,
     Blake2s,
     Blake2b,
