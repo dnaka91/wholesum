@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.2.7] - 2023-08-19
+
+### Changed
+
+- Updated all dependencies.
+
 ## [0.2.6] - 2022-09-14
 
 ### Added
@@ -72,7 +78,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[Unreleased]: https://github.com/dnaka91/wholesum/compare/v0.2.6...HEAD
+[Unreleased]: https://github.com/dnaka91/wholesum/compare/v0.2.7...HEAD
+[0.2.6]: https://github.com/dnaka91/wholesum/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/dnaka91/wholesum/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/dnaka91/wholesum/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/dnaka91/wholesum/compare/v0.2.3...v0.2.4
