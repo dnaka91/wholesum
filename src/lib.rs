@@ -89,6 +89,24 @@ pub enum Algorithm {
     Streebog256,
     Tiger,
     Whirlpool,
+    Ascon,
+    AsconA,
+    #[strum(serialize = "belt")]
+    BelT,
+    #[strum(serialize = "jh-512")]
+    Jh512,
+    #[strum(serialize = "jh-384")]
+    Jh384,
+    #[strum(serialize = "jh-256")]
+    Jh256,
+    #[strum(serialize = "jh-224")]
+    Jh224,
+    #[strum(serialize = "skein-1024")]
+    Skein1024,
+    #[strum(serialize = "skein-512")]
+    Skein512,
+    #[strum(serialize = "skein-256")]
+    Skein256,
 }
 
 impl Algorithm {
@@ -132,6 +150,16 @@ impl Algorithm {
             Self::Streebog256 => hash::<streebog::Streebog256>,
             Self::Tiger => hash::<tiger::Tiger>,
             Self::Whirlpool => hash::<whirlpool::Whirlpool>,
+            Self::Ascon => hash::<ascon_hash::AsconHash>,
+            Self::AsconA => hash::<ascon_hash::AsconAHash>,
+            Self::BelT => hash::<belt_hash::BeltHash>,
+            Self::Jh512 => hash::<jh::Jh512>,
+            Self::Jh384 => hash::<jh::Jh384>,
+            Self::Jh256 => hash::<jh::Jh256>,
+            Self::Jh224 => hash::<jh::Jh224>,
+            Self::Skein1024 => hash::<skein::Skein1024>,
+            Self::Skein512 => hash::<skein::Skein512>,
+            Self::Skein256 => hash::<skein::Skein256>,
         }
     }
 }
