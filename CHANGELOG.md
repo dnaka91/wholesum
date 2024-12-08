@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.2.8] - 2024-12-08
+
+### Added
+
+- Add `Ascon`, `BelT`, `JH` and `Skein` algorithms.
+
+### Changed
+
+- Updated all dependencies.
+
 ## [0.2.7] - 2023-08-19
 
 ### Changed

@@ -1,10 +1,12 @@
 [licenses]
 allow = [
+    "Apache-2.0",
     "BSD-2-Clause",
+    "BSD-3-Clause",
     "CC0-1.0",
+    "MIT",
 ]
-allow-osi-fsf-free = "both"
 exceptions = [
     { allow = ["AGPL-3.0"], name = "wholesum" },
-    { allow = ["Unicode-DFS-2016"], name = "unicode-ident" },
+    { allow = ["Unicode-3.0"], name = "unicode-ident" },
 ]

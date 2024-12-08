@@ -200,7 +200,7 @@ where
 
 struct WriteWrapper<'a, T: SimpleHasher>(&'a mut T);
 
-impl<'a, T: SimpleHasher> Write for WriteWrapper<'a, T> {
+impl<T: SimpleHasher> Write for WriteWrapper<'_, T> {
     fn write(&mut self, buf: &[u8]) -> Result<usize> {
         self.0.update(buf);
         Ok(buf.len())
